@@ -17,11 +17,11 @@ public class Main {
                 field[i][j] = 0;
             }
         }
-        int wmax=-5,wmin=1000,lmax=-5,lmin=100;
+        int wmax=-5,wmin=100000,lmax=-5,lmin=1000000;
         for(int i = 0;i<number;i++){
              System.out.println("Введите позицию монстра:");
-             int pos1 = scanner.nextInt();
-             int pos2 = scanner.nextInt();
+             int pos1 = scanner.nextInt()-1;
+             int pos2 = scanner.nextInt()-1;
              field[pos1][pos2]=1;
              if(pos1<wmin) wmin= pos1;
              if(pos1>wmax) wmax = pos1;
@@ -29,31 +29,17 @@ public class Main {
             if(pos2<lmin) lmin= pos2;
             if(pos2>lmax) lmax = pos2;
         }
-    System.out.println(lmax);
-    System.out.println(lmin);
-    System.out.println(wmax);
-    System.out.println(wmin);
-    int wfield = (wmax-wmin);
-    int lfield= (lmax-lmin);
-    //куча проверок
-    for (int i =wmin;i<wmax+1;i++){//проверка верхней границы поля
-        if(field[i][lmin]==1) wfield++; break;
-    }
-    for(int i = wmin;i<wmax+1;i++){//проверка нижней границы
-        if(field[i][lmax]==1)wfield++; break;
-    }
-    for(int i = lmin;i<lmax+1;i++){//проверка левой границы
-        if(field[wmin][i]==1) lfield++;break;
-    }
-    for(int i = lmin;i<lmax+1;i++){//проверка правой границы
-        if(field[wmax][i]==1) lfield++;break;
-    }
+    int wfield = (wmax-wmin)+1;
+    int lfield= (lmax-lmin)+1;
 
-        if (field[wmin][lmin]==1){
-        if (field[wmax][lmax]==1) wfield++;lfield++;
-
-    }
-    int pay =wfield*lfield;
+    if(((field[wmin][lmin]==1)&&(field[wmax][lmin]==1))||(((field[wmin][lmin]==1))&&(field[wmin][lmax]==1))||
+            ((field[wmin][lmin]==1)&&field[wmax][lmax]==1)||((field[wmax][lmin]==1)&&(field[wmin][lmax]==1))){
+    if (wfield>=lfield){
+        lfield++;
+    }else wfield++;
+    };
+    if((wmin==wmax)&&(lmin==lmax)) wfield=lfield=1;
+    int pay = wfield*lfield;
     System.out.println("Необходимо монет:");
     System.out.println(pay);
 
