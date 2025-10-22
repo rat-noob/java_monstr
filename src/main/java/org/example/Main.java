@@ -4,6 +4,9 @@ import java.util.Scanner;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+    public static void sq(int[] xpos, int[]ypos){
+        
+    }
     public static void main(String[] args) {
         Scanner scanner  = new Scanner(System.in);
         System.out.println("Введите число монстров:");
@@ -18,10 +21,20 @@ public class Main {
             }
         }
         int wmax=-5,wmin=100000,lmax=-5,lmin=1000000;
+        int[] xpos = new int[number];
+        int[] ypos = new int[number];
+
+
         for(int i = 0;i<number;i++){
              System.out.println("Введите позицию монстра:");
              int pos1 = scanner.nextInt()-1;
              int pos2 = scanner.nextInt()-1;
+
+
+             xpos[i]= pos1;
+             ypos[i]= pos2;
+
+
              field[pos1][pos2]=1;
              if(pos1<wmin) wmin= pos1;
              if(pos1>wmax) wmax = pos1;
