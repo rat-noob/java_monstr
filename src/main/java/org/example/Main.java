@@ -4,55 +4,74 @@ import java.util.Scanner;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void sq(int[] xpos, int[]ypos){
-        
+    public static int payment(int[] xpos, int[]ypos){
+        int minx = xpos[0], maxx = xpos[0];
+        int miny = ypos[0], maxy = ypos[0];
+
+        for (int i = 1; i < xpos.length; i++) {
+            minx = Math.min(minx, xpos[i]);
+            maxx = Math.max(maxx, xpos[i]);
+            miny = Math.min(miny, ypos[i]);
+            maxy = Math.max(maxy, ypos[i]);
+        }
+        int width = maxx - minx + 1;
+        int height = maxy - miny + 1;
+
+        return width * height;
     }
     public static void main(String[] args) {
         Scanner scanner  = new Scanner(System.in);
         System.out.println("Введите число монстров:");
         int number = scanner.nextInt();
         System.out.println("Введите размер поля:");
-        int width = scanner.nextInt();
-        int length = scanner.nextInt();
-        int[][] field = new int[width][length];
-        for (int i =0;i<width;i++){
-            for (int j=0;j<length;j++){
-                field[i][j] = 0;
-            }
-        }
-        int wmax=-5,wmin=100000,lmax=-5,lmin=1000000;
+        int n = scanner.nextInt();
+
         int[] xpos = new int[number];
         int[] ypos = new int[number];
 
-
+        int pay=1000000000 ;
+        int paydef;
         for(int i = 0;i<number;i++){
              System.out.println("Введите позицию монстра:");
              int pos1 = scanner.nextInt()-1;
              int pos2 = scanner.nextInt()-1;
 
-
              xpos[i]= pos1;
              ypos[i]= pos2;
-
-
-             field[pos1][pos2]=1;
-             if(pos1<wmin) wmin= pos1;
-             if(pos1>wmax) wmax = pos1;
-
-            if(pos2<lmin) lmin= pos2;
-            if(pos2>lmax) lmax = pos2;
         }
-    int wfield = (wmax-wmin)+1;
-    int lfield= (lmax-lmin)+1;
+        paydef = payment(xpos,ypos);
+        for (int i =0;i<number;i++){
+            int defx=xpos[i];
+            int defy=ypos[i];
 
-    if(((field[wmin][lmin]==1)&&(field[wmax][lmin]==1))||(((field[wmin][lmin]==1))&&(field[wmin][lmax]==1))||
-            ((field[wmin][lmin]==1)&&field[wmax][lmax]==1)||((field[wmax][lmin]==1)&&(field[wmin][lmax]==1))){
-    if (wfield>=lfield){
-        lfield++;
-    }else wfield++;
-    };
-    if((wmin==wmax)&&(lmin==lmax)) wfield=lfield=1;
-    int pay = wfield*lfield;
+
+
+            //подвигали по х
+            xpos[i]+=1;
+            if(paydef<Math.min(pay,payment(xpos,ypos))){pay=Math.min(pay,payment(xpos,ypos));}
+
+            xpos[i]=defx;
+            xpos[i]-=1;
+            if(paydef<Math.min(pay,payment(xpos,ypos))) {
+                pay = Math.min(pay, payment(xpos, ypos));
+            }
+            xpos[i]=defx;
+
+            //подвигалои по у
+
+            ypos[i]+=1;
+            if(paydef<Math.min(pay,payment(xpos,ypos))) {
+                pay = Math.min(pay, payment(xpos, ypos));
+            }
+            ypos[i]=defy;
+            ypos[i]-=1;
+            if(paydef<Math.min(pay,payment(xpos,ypos))) {
+                pay = Math.min(pay, payment(xpos, ypos));
+            }
+            ypos[i]=defy;
+
+        }
+
     System.out.println("Необходимо монет:");
     System.out.println(pay);
 
