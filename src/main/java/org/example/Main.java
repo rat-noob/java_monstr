@@ -1,4 +1,7 @@
 package org.example;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -25,6 +28,7 @@ public class Main {
         int number = scanner.nextInt();
         System.out.println("Введите размер поля:");
         int n = scanner.nextInt();
+        ArrayList<Integer> sq = new ArrayList<Integer>();
 
         int[] xpos = new int[number];
         int[] ypos = new int[number];
@@ -45,35 +49,48 @@ public class Main {
             int defy=ypos[i];
 
 
-
-            //подвигали по х
-            xpos[i]+=1;
-            if(paydef<Math.min(pay,payment(xpos,ypos))){pay=Math.min(pay,payment(xpos,ypos));}
-
-            xpos[i]=defx;
-            xpos[i]-=1;
-            if(paydef<Math.min(pay,payment(xpos,ypos))) {
-                pay = Math.min(pay, payment(xpos, ypos));
-            }
-            xpos[i]=defx;
-
             //подвигалои по у
 
             ypos[i]+=1;
-            if(paydef<Math.min(pay,payment(xpos,ypos))) {
-                pay = Math.min(pay, payment(xpos, ypos));
-            }
+//            if(paydef<Math.min(pay,payment(xpos,ypos))) {
+//                pay = Math.min(pay, payment(xpos, ypos));
+//            }
+
+            sq.add(payment(xpos, ypos));
+
             ypos[i]=defy;
             ypos[i]-=1;
-            if(paydef<Math.min(pay,payment(xpos,ypos))) {
-                pay = Math.min(pay, payment(xpos, ypos));
-            }
+
+//            if(paydef<Math.min(pay,payment(xpos,ypos))) {
+//                pay = Math.min(pay, payment(xpos, ypos));
+//            }
+
+            sq.add(payment(xpos, ypos));
+
             ypos[i]=defy;
+            //подвигали по х
+            xpos[i]+=1;
+//            if(paydef<Math.min(pay,payment(xpos,ypos))){pay=Math.min(pay,payment(xpos,ypos));}
+
+            sq.add(payment(xpos, ypos));
+
+            xpos[i]=defx;
+            xpos[i]-=1;
+//            if(paydef<Math.min(pay,payment(xpos,ypos))) {
+//                pay = Math.min(pay, payment(xpos, ypos));
+//            }
+
+            sq.add(payment(xpos, ypos));
+
+            xpos[i]=defx;
+
+
 
         }
 
     System.out.println("Необходимо монет:");
-    System.out.println(pay);
+//    System.out.println(pay);
+        System.out.println(Collections.max(sq));
 
 
     }
