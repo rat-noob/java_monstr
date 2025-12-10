@@ -22,12 +22,18 @@ public class Main {
 
         return width * height;
     }
+    public static boolean isinside(int x,int y,int w,int l){
+        if(x<0||x>w||y<0||y>l) return false;
+        return true;
+    }
     public static void main(String[] args) {
         Scanner scanner  = new Scanner(System.in);
         System.out.println("Введите число монстров:");
         int number = scanner.nextInt();
-        System.out.println("Введите размер поля:");
-        int n = scanner.nextInt();
+        System.out.println("Введите ширину поля:");
+        int w = scanner.nextInt();
+        System.out.println("Введите длину поля:");
+        int l = scanner.nextInt();
         ArrayList<Integer> sq = new ArrayList<Integer>();
 
         int[] xpos = new int[number];
@@ -44,6 +50,7 @@ public class Main {
              ypos[i]= pos2;
         }
         paydef = payment(xpos,ypos);
+        sq.add(paydef);
         for (int i =0;i<number;i++){
             int defx=xpos[i];
             int defy=ypos[i];
@@ -55,24 +62,25 @@ public class Main {
 //            if(paydef<Math.min(pay,payment(xpos,ypos))) {
 //                pay = Math.min(pay, payment(xpos, ypos));
 //            }
+            if(isinside(xpos[i],ypos[i],w-1,l-1)) sq.add(payment(xpos, ypos));
 
-            sq.add(payment(xpos, ypos));
 
             ypos[i]=defy;
             ypos[i]-=1;
+            if(isinside(xpos[i],ypos[i],w-1,l-1)) sq.add(payment(xpos, ypos));
 
 //            if(paydef<Math.min(pay,payment(xpos,ypos))) {
 //                pay = Math.min(pay, payment(xpos, ypos));
 //            }
 
-            sq.add(payment(xpos, ypos));
+
 
             ypos[i]=defy;
             //подвигали по х
             xpos[i]+=1;
+            if(isinside(xpos[i],ypos[i],w-1,l-1)) sq.add(payment(xpos, ypos));
 //            if(paydef<Math.min(pay,payment(xpos,ypos))){pay=Math.min(pay,payment(xpos,ypos));}
 
-            sq.add(payment(xpos, ypos));
 
             xpos[i]=defx;
             xpos[i]-=1;
@@ -80,7 +88,7 @@ public class Main {
 //                pay = Math.min(pay, payment(xpos, ypos));
 //            }
 
-            sq.add(payment(xpos, ypos));
+            if(isinside(xpos[i],ypos[i],w-1,l-1)) sq.add(payment(xpos, ypos));
 
             xpos[i]=defx;
 
